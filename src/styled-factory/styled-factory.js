@@ -1,4 +1,5 @@
 import { createElement } from 'react';
+import { tags } from '../tags/tags';
 
 const HEAD = document.head || document.getElementsByTagName('head')[0];
 const STYLE = document.createElement('style');
@@ -25,7 +26,7 @@ const appendCss = (styles, type) => {
     .toString(36)
     .replace(/[^a-z]+/g, '')
     .substr(0, 5);
-  const cssClassName = `${type}-${random}`;
+  const cssClassName = `${type}tag-${random}`;
   const css = `.${cssClassName}{${styles}}`;
 
   if (STYLE.styleSheet) STYLE.styleSheet.cssText = css;
@@ -34,10 +35,8 @@ const appendCss = (styles, type) => {
   return cssClassName;
 };
 
-const types = ['div', 'ul', 'li', 'a', 'section'];
-
-export const styled = types.reduce(
-  (acc, key) =>
+export const styled = tags.reduce(
+  (acc, { tag: key }) =>
     Object.assign(acc, {
       [key]: (strings, ...values) => {
         return (props) => {
