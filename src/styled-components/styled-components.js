@@ -7,7 +7,7 @@ const rad = '0.25rem';
 export const StyledDiv = styled.div`
   background-color: ${red};
   width: 100%;
-  min-height: 80vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,6 +27,7 @@ export const StyledSection = styled.section`
   padding: 12px 20px;
   color: white;
   border-radius: ${rad};
+  margin-bottom: 4rem;
 `;
 
 export const StyledA = styled.a`
@@ -45,4 +46,7 @@ export const StyledP = styled.p`
   color: purple;
   background-color: red;
   border-radius: ${rad};
+  ser-select: none;
+  max-width: 70vw;
+  margin-bottom: 2rem;
 `;
