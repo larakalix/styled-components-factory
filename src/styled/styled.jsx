@@ -16,6 +16,7 @@ const defaultTemplateLiteralFunction = (strings, ...values) => {
     return acc;
   }, '');
 };
+
 const appendCss = (styles, type) => {
   const random = Math.random()
     .toString(36)
@@ -30,33 +31,25 @@ const appendCss = (styles, type) => {
   return cssClassName;
 };
 
-export const styled = {
-  div: (strings, ...values) => {
-    return (props) => {
-      const styles = defaultTemplateLiteralFunction(strings, ...values)
-        .trim()
-        .replace(/\n/gi, '');
+const types = ['div', 'ul', 'li', 'a', 'section'];
 
-      if (!styles) return null;
+export const styled = types.reduce(
+  (o, key) =>
+    Object.assign(o, {
+      [key]: (strings, ...values) => {
+        return (props) => {
+          const styles = defaultTemplateLiteralFunction(strings, ...values)
+            .trim()
+            .replace(/\n/gi, '');
 
-      return createElement('div', {
-        ...props,
-        className: appendCss(styles, 'div'),
-      });
-    };
-  },
-  ul: (strings, ...values) => {
-    return (props) => {
-      const styles = defaultTemplateLiteralFunction(strings, ...values)
-        .trim()
-        .replace(/\n/gi, '');
+          if (!styles) return null;
 
-      if (!styles) return null;
-
-      return createElement('ul', {
-        ...props,
-        className: appendCss(styles, 'ul'),
-      });
-    };
-  },
-};
+          return createElement(key, {
+            ...props,
+            className: appendCss(styles, key),
+          });
+        };
+      },
+    }),
+  {}
+);

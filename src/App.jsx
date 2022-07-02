@@ -2,6 +2,7 @@ import { styled } from './styled/styled';
 
 const red = 'tomato';
 const size = '1.2rem';
+const rad = '0.25rem';
 
 const StyledDiv = styled.div`
   background-color: ${red};
@@ -18,7 +19,24 @@ const StyledDiv = styled.div`
 const StyledList = styled.ul`
   background-color: greenyellow;
   padding: 2rem;
-  border-radius: 0.25rem;
+  border-radius: ${rad};
+`;
+
+const StyledSection = styled.section`
+  background-color: blue;
+  padding: 12px 20px;
+  color: white;
+  border-radius: ${rad};
+`;
+
+const StyledA = styled.a`
+  display: block;
+  color: white;
+  background-color: #000;
+  border-radius: ${rad};
+  margin-top: 1rem;
+  padding: 10px 20px;
+  margin-bottom: 2srem;
 `;
 
 function App() {
@@ -30,6 +48,12 @@ function App() {
         <li>Peras</li>
         <li>Uvas</li>
       </StyledList>
+      <StyledSection>
+        <h1>Ivan Lara estuvo aca</h1>
+        <StyledA href="/" target="_blank">
+          Boton
+        </StyledA>
+      </StyledSection>
     </StyledDiv>
   );
 }
