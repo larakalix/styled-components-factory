@@ -17,6 +17,8 @@ const StyledDiv = styled.div`
 
 const StyledList = styled.ul`
   background-color: greenyellow;
+  padding: 2rem;
+  border-radius: 0.25rem;
 `;
 
 function App() {
