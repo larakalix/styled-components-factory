@@ -1,23 +1,8 @@
 import { createElement } from 'react';
 
-const parseStyles = (styles) =>
-  styles
-    .split(';')
-    .filter((style) => style.split(':')[0] && style.split(':')[1])
-    .map((style) => [
-      style
-        .split(':')[0]
-        .trim()
-        .replace(/-./g, (c) => c.substr(1).toUpperCase()),
-      style.split(':')[1].trim(),
-    ])
-    .reduce(
-      (styleObj, style) => ({
-        ...styleObj,
-        [style[0]]: style[1],
-      }),
-      {}
-    );
+const HEAD = document.head || document.getElementsByTagName('head')[0];
+const STYLE = document.createElement('style');
+HEAD.appendChild(STYLE);
 
 const defaultTemplateLiteralFunction = (strings, ...values) => {
   return strings.reduce((acc, v, i) => {
@@ -31,6 +16,19 @@ const defaultTemplateLiteralFunction = (strings, ...values) => {
     return acc;
   }, '');
 };
+const appendCss = (styles, type) => {
+  const random = Math.random()
+    .toString(36)
+    .replace(/[^a-z]+/g, '')
+    .substr(0, 5);
+  const cssClassName = `${type}-${random}`;
+  const css = `.${cssClassName}{${styles}}`;
+
+  if (STYLE.styleSheet) STYLE.styleSheet.cssText = css;
+  else STYLE.appendChild(document.createTextNode(css));
+
+  return cssClassName;
+};
 
 export const styled = {
   div: (strings, ...values) => {
@@ -43,7 +41,7 @@ export const styled = {
 
       return createElement('div', {
         ...props,
-        style: parseStyles(styles),
+        className: appendCss(styles, 'div'),
       });
     };
   },
@@ -57,7 +55,7 @@ export const styled = {
 
       return createElement('ul', {
         ...props,
-        style: parseStyles(styles),
+        className: appendCss(styles, 'ul'),
       });
     };
   },
