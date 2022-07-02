@@ -5,14 +5,17 @@ const STYLE = document.createElement('style');
 HEAD.appendChild(STYLE);
 
 const defaultTemplateLiteralFunction = (strings, ...values) => {
-  return strings.reduce((acc, v, i) => {
-    acc += v;
-    if (!values[i]) {
+  return strings.reduce((acc, key, index) => {
+    acc += key;
+    if (!values[index]) {
       acc += '';
       return acc;
     }
 
-    acc += typeof values[i] === 'function' ? values[i](props) : values[i];
+    acc +=
+      typeof values[index] === 'function'
+        ? values[index](props)
+        : values[index];
     return acc;
   }, '');
 };
@@ -34,8 +37,8 @@ const appendCss = (styles, type) => {
 const types = ['div', 'ul', 'li', 'a', 'section'];
 
 export const styled = types.reduce(
-  (o, key) =>
-    Object.assign(o, {
+  (acc, key) =>
+    Object.assign(acc, {
       [key]: (strings, ...values) => {
         return (props) => {
           const styles = defaultTemplateLiteralFunction(strings, ...values)
